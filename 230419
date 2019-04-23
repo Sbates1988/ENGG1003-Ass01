@@ -1,0 +1,223 @@
+/* Main function of the C program. */
+
+#include<stdio.h>
+#include<string.h>
+
+void rotationEncrypt()
+{
+	char rotationMessage[100];      //array of size 100 used to store the original message input by the user
+	char ch;        //character used to store encrypted character
+	int i, key;         //defined integers for use throughout code
+	
+	printf("Enter message to be encrypted using Rotation Cipher: ");        //prints to screen to prompt user to input message to be encrypted
+	fgets(rotationMessage, 100, stdin);         /* fgets is a function used to grab the message in the previous line and store in "substitutionMessage". (pointer to array of chars, max number of characters to be read,
+	                                            and file that the characters are read from) */ 
+	printf("Enter key: ");      //prints to screen to prompt user to input key that the message is to be encrypted by
+	scanf("%d", &key);      //scanf reads a formatted input from stdin, in this case searches for an integer and stores it in key. 
+	
+	for(i = 0; rotationMessage[i] != '\0'; ++i) {       /*loop which initialises i (rotation message index) as 0, and executes while the index of rotation message is not null, and increments the index by 1 each loop
+	                                                         which will execute to encrypt the entire original message*/
+		ch = rotationMessage[i];        //stores original character in 'ch' before returning it back to the rotationMessage[i] 
+		
+		if (ch >= 'a' && ch <= 'z' && key != 0 && key != 26)  {         //determines whether the character is between ASCII numbers of 'a' and 'z', and also what the key is. If the key is 0 or 26 it will mean no change to the character
+			ch = (ch - 32) + key;           //because it's a lower case letter, it subtracts 32 to place the character in the capital letter ASCII range and then adds the key to encrypt the character
+			
+			if(ch > 'z')    {            // if character is greater than ASCII value 'z', 
+				ch = (ch - 26) - 32;    // it will subtract 26 to return it back into the range a-z and then subtract 32 to enter as a capital
+			}
+			else if (ch < 'A')  {       //if less than ASCII value 'A'
+			    ch = (ch + 26);         // will add 26 to return it into the ASCII value range between 'A'-'Z'
+			}
+			
+			rotationMessage[i] = ch;        //returns excrypted character into rotationMessage array
+		}
+		else if (ch >= 'A' && ch <= 'Z' && key != 0 && key != 26)    {      //determines whether the character is between ASCII numbers of 'A' and 'Z', and also what the key is. If the key is 0 or 26 it will mean no change to the character
+			ch = ch + key;      //because it's an upper case letter, key only is added to the character as it is already a capital letter
+			
+			if(ch > 'Z'){       // if character is greater than ASCII value 'Z',
+				ch = ch - 26;   // subtract 26 to return it back into the range A-Z
+			}
+			else if (ch < 'A')  {   // if less than ASCII value 'A'
+			    ch = ch + 26;       // will add 26 to return it into the ASCII value range between 'A'-'Z'
+			}
+			
+			rotationMessage[i] = ch;        //returns excrypted character into rotationMessage array
+		}
+		else 
+		    ch = rotationMessage[i];    //if character is a special character no encryption takes place. 
+	}
+	
+	printf("Encrypted message: %s", rotationMessage);   //prints encrypted message to screen. 
+	
+}
+
+void rotationDecrypt()
+{
+	char rotationMessage[100];      //array of size 100 used to store the original message input by the user
+	char ch;        //character used to store encrypted character
+	int i, key;     //defined integers for use throughout code
+	
+	printf("Enter message to be decrypted using Rotation Cipher: ");        //prints to screen to prompt user to input message to be decrypted
+	fgets(rotationMessage, 100, stdin);     /* fgets is a function used to grab the message in the previous line and store in "substitutionMessage". (pointer to array of chars, max number of characters to be read,
+	                                            and file that the characters are read from) */ 
+	printf("Enter key: ");      //prints to screen to prompt user to input key that the message is to be encrypted by
+	scanf("%d", &key);      //scanf reads a formatted input from stdin, in this case searches for an integer and stores it in key. 
+	
+	for(i = 0; rotationMessage[i] != '\0'; ++i) {       /*loop which initialises i (rotation message index) as 0, and executes while the index of rotation message is not null, and increments the index by 1 each loop
+	                                                         which will execute to encrypt the entire original message*/
+		ch = rotationMessage[i];        //stores original character in 'ch' before returning it back to the rotationMessage[i] 
+		
+		if (ch >= 'a' && ch <= 'z' && key != 0 && key != 26)  {     //determines whether the character is between ASCII numbers of 'a' and 'z', and also what the key is. If the key is 0 or 26 it will mean no change to the character
+			ch = (ch - 32) - key;       //because it's a lower case letter, it subtracts 32 to place the character in the capital letter ASCII range and then subtracts the key to decrypt the character
+			
+			if(ch > 'z')    {       // if character is greater than ASCII value 'z',
+				ch = (ch - 26) - 32;        // it will subtract 26 to return it back into the range a-z and then subtract 32 to enter as a capital
+			}
+			else if (ch < 'A')  {       //if less than ASCII value 'A'
+			    ch = (ch + 26);     // will add 26 to return it into the ASCII value range between 'A'-'Z'
+			}
+			
+			rotationMessage[i] = ch;        //returns excrypted character into rotationMessage array
+		}
+		else if (ch >= 'A' && ch <= 'Z' && key != 0 && key != 26)    {      //determines whether the character is between ASCII numbers of 'A' and 'Z', and also what the key is. If the key is 0 or 26 it will mean no change to the character
+			ch = ch - key;      //because it's an upper case letter, key only is subtracted to the character as it is already a capital letter
+			
+			if(ch > 'Z'){       // if character is greater than ASCII value 'Z',
+				ch = ch - 26;       // subtract 26 to return it back into the range A-Z
+			}
+			else if (ch < 'A')  {       // if less than ASCII value 'A'
+			    ch = ch + 26;       // will add 26 to return it into the ASCII value range between 'A'-'Z'
+			}
+			
+			rotationMessage[i] = ch;        //returns decrypted character into rotationMessage array
+		}
+		else 
+		    ch = rotationMessage[i];        //if character is a special character no encryption takes place. 
+	}
+	
+	printf("Decrypted message: %s", rotationMessage);       //prints encrypted message to screen. 
+	
+}
+
+void subEncrypt()
+{
+    int arraySize = 50; //integer created to allow ease of increasing and decreasing array size of original message and encrypted message
+	char *substitution_Key = "mnbvcxzlkjhgfdsapoiuytrewq"; //nominates the cypher code to be used in the exercise
+	char substitutionMessage[arraySize], substitutionCode[arraySize]; //declares two arrays to be used - the first for original message to be entered into, and second to store the encrypted code
+	int messageLength, index, i; //declares the integers needed for the exercise
+	
+	printf("Enter message to be encrypted using Substitution Cipher:"); //prints message to screen as prompt for user to enter the message to be encrypted
+	fgets(substitutionMessage, sizeof(substitutionMessage), stdin); //fgets is a function used to grab the message in the previous line and store in "substitutionMessage". (pointer to array of chars, max number of characters to be read, 
+	                                                               //and file that the characters are read from)
+	messageLength = strlen(substitutionMessage); //determines the string length of "substitutionMessage"/ or original input
+	
+	substitutionCode[messageLength];       //defines array size of the encrypted message
+	for (i=0; i < messageLength; i++)   {       //Loop used to continue through each character of the original input or in this case "substitutionMessage"
+	    index = substitutionMessage[i] - 'a'; //'a' (ASCII value 97) is subtracted to ensure that the character is indexed from the beginning of the substitution key
+	        if (index < 0)  {       //defines that if the character ASCII value is less than zero, then it equals a space
+	            substitutionCode[i] = substitutionMessage[i]; //submit a space into the message in the current array byte if index is less than zero
+	        }
+	        else    {
+	            substitutionCode[i] = substitution_Key[index] - 32; //if index value is greater than 0, then the substitution key will be used to index by the given value to give the encrypted character
+	        }
+	}
+	substitutionCode[messageLength] = 0; //this null terminates the string which effectively tells you where the end of the string is
+	
+	printf("Encrypted message: %s", substitutionCode); //prints encrypted message to screen
+	
+}
+
+//  This main function is used to prompt the user for what encryption/decryption method they want to use. 
+int main()
+{
+    int cipherChoice, rotationChoice, subChoice;        
+    
+    menu:
+    
+	printf("Choose from the following Cipher options -\n"); //these printf statements are used to prompt the user to enter what number they would like which corresponds to the desired cipher
+    printf("1: Rotation Cipher\n"); 
+    printf("2: Substitution Cipher\n");
+    printf("3: Exit Program\n");
+    printf("    Choice:  ");
+
+    scanf("%d", &cipherChoice);     //reads the integer that is entered by the user which corresponds with a particular cipher desired.
+
+    cipherChoice:
+
+    //below uses switch case statements to enter into a particular choice entered by the user above. 
+    switch(cipherChoice) {
+        case 1:         //if the user enters a '1', this case will be entered into
+            printf("\nRotation Cipher has been chosen.\n");     //confirms the intial choice of the user
+            printf("Choose from the following options:\n");
+            printf("1: Encrypt\n");     //these printf statements prompt the user again within the initial choice to decide whether an encryption or decryption is wanted. 
+            printf("2: Decrypt\n");
+            printf("3: Exit Program\n");
+            scanf("%d", &rotationChoice);
+                switch(rotationChoice)  {
+                    case 1:     //if the user enters a '1', this case will be entered into which is encryption via a rotation cipher
+                        printf("You have chosen to encrypt via Rotation Cipher\n");
+                        rotationEncrypt();
+                    break;
+                
+                    case 2:     //if the user enters a '2', this case will be entered into which is decryption via a rotation cipher
+                        printf("You have chosen to decrypt via Rotation Cipher\n");
+                        rotationDecrypt();
+                    break;
+                
+                    case 3:     //if the user enters a '3', this case will be entered into which is 
+                        printf("Exit Rotation Cipher chosen.\n");
+                        main();
+                    break;
+                
+                    default:
+                        printf("Invalid choice. Choose from options 1-3.");
+                        goto cipherChoice;
+                    break;
+                }
+        break;
+
+        subChoice:
+
+        case 2:     //if the user enters a '2', this case will be entered into
+            printf("\nSubstitution Cipher has been chosen.\n");
+            printf("Choose from the following options:\n");
+            printf("1: Encrypt\n");
+            printf("2: Decrypt\n");
+            printf("3: Exit Program\n");
+            scanf("%d", &subChoice);
+                switch(subChoice)  {
+                    case 1:
+                        printf("You have chosen to encrypt via Substitution Cipher\n");
+                        subEncrypt();
+                    break;
+                
+                    case 2:
+                        printf("You have chosen to decrypt via Substitution Cipher\n");
+                        //subDecrypt();
+                    break;
+                
+                    case 3:
+                        printf("Exit Substitution Cipher chosen.\n");
+                        main();
+                    break;
+                
+                    default:
+                        printf("Invalid choice. Choose from options 1-3.");
+                        goto subChoice;
+                    break;
+                }
+        break;
+
+        case 3:
+            printf("Exit program chosen.\n");
+        break;
+        
+        default:
+            printf("Invalid choice. Choose from options 1-3.");
+            goto menu;
+        break;
+    }
+
+	return 0;
+}
+
